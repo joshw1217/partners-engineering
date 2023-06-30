@@ -3,8 +3,8 @@ import Form from './Form';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App" style={{color: "#f5f5f5"}}>
+      <header>
       
         <Form />
       </header>

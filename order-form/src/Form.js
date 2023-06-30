@@ -1,9 +1,18 @@
 import React from 'react';
+import logo from './partners_logo.png';
 
 
 const Form = () => {
   return (
-    <form>
+    <div>
+      <nav className="navbar bg-white custom-nav">
+        <div className="custom-nav">
+          <a className="navbar-brand" href="www.parnterspersonnel.com">
+            <img src={logo} alt="Company Logo" height="100" />
+          </a>
+        </div>
+      </nav>
+    <form className="App-header">
       <div className="form-group row align-items-center">
         <label htmlFor="name" className="col-sm-auto col-form-label">Company</label>
         <div className="col-sm">
@@ -59,6 +68,7 @@ const Form = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 
