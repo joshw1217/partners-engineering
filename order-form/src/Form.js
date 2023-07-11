@@ -1,8 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { Row, Col } from 'react-bootstrap';
 import logo from './partners_logo.png';
 
 
+
+
 const Form = () => {
+
+
+    const [selectedItem, setSelectedItem] = useState('');
+
+    const handleDropdownChange = (event) => {
+      setSelectedItem(event.target.value);
+    };
+
+    const [selectedItems, setSelectedItems] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleItemClick = (itemValue) => {
+    if (selectedItems.includes(itemValue)) {
+      setSelectedItems(selectedItems.filter((item) => item !== itemValue));
+    } else {
+      setSelectedItems([...selectedItems, itemValue]);
+    }
+  };
+
+  const isItemSelected = (itemValue) => {
+    return selectedItems.includes(itemValue);
+  };
+
   return (
     <div>
       <nav className="navbar custom-nav">
@@ -14,8 +44,11 @@ const Form = () => {
       </nav>
     <form className="App-header">
     <hr className="divider" />
-    <div className="form-group" style={{marginBottom: "1rem"}}>
+    <div className="form-group" style={{fontWeight: "700"}}>
         <label htmlFor="intro">Finding associates to fill your shifts has never been easier.</label>
+    </div>
+    <div className="form-group" style={{marginBottom: "12px", fontSize: "16px"}}>
+        <label htmlFor="intro">Fill out the info below to get started.</label>
     </div>
     <div className="form-group col-md-8 item">
       <label htmlFor="name">Company</label>
@@ -25,67 +58,168 @@ const Form = () => {
       <label htmlFor="address">Address</label>
       <input type="text" className="form-control" placeholder="Where's the company located?" />
     </div>
-    <div className="form-group col-md-8 item">
+    <Row className="custom-row">
+    <Col md={5} className="item">
+    <div className="form-group item">
       <label htmlFor="first">First Name</label>
       <input type="text" className="form-control" placeholder="Enter your first name" />
     </div>
-    <div className="form-group col-md-8 item">
+    </Col>
+    <Col md={6} className="row-item">
+    <div className="form-group item row-item">
       <label htmlFor="last">Last Name</label>
       <input type="text" className="form-control" placeholder="Enter your last name" />
     </div>
-    <div className="form-group col-md-8 item">
+    </Col>
+    </Row>
+    <Row className="custom-row">
+    <Col md={5} className="item">
+    <div className="form-group  item">
       <label htmlFor="email">Company Email</label>
       <input type="email" className="form-control" placeholder="What's a good company email?" />
     </div>
-    <div className="form-group col-md-8 item">
+    </Col>
+    <Col md={6} className="row-item">
+    <div className="form-group item row-item">
       <label htmlFor="phone">Phone</label>
       <input type="text" className="form-control" placeholder="And a company phone" />
     </div>
+    </Col>
+    </Row>
+
     {/*Local branch field here?? Include on form? */}
 
     <div className="form-group col-md-8 item">
-      <label htmlFor="position">Position</label>
+      <label htmlFor="position">Hiring Position</label>
       <input type="text" className="form-control" placeholder="Position to fill" />
     </div>
-    <div className="form-group col-md-8 item">
+    <Row className="custom-row">
+    <Col md={5} className="item">
+    <div className="form-group  item">
       <label htmlFor="date">Start Date</label>
       <input type="text" className="form-control" placeholder="What date will they start?" />
     </div>
-    <div className="form-group col-md-8 item">
-      <label htmlFor="duration">Duration</label>
-      <input type="text" className="form-control" placeholder="How long do you need them?" />
+    </Col>
+    <Col md={6} className="row-item">
+
+    <div className='form-group item row-item'>
+        <label htmlFor="length-dropdown">Length of Assignment</label>
+        <select
+          id="length-dropdown"
+          value={selectedItem}
+          onChange={handleDropdownChange}
+          className="form-control"
+          style={{appearance: "auto"}}
+        >
+          <option value="">1 week</option>
+          <option value="1 month">1 month</option>
+          <option value="6 months">6 months</option>
+          <option value="1 year">1 year</option>
+          <option value="Indefinitely">Indefinitely</option>
+        </select>
+      </div>
+    </Col>
+    </Row>
+    <Col md={8} className="item">
+    <div className="form-group">
+      <label htmlFor="shift-dropdown">Shift</label>
+      <div className={`dropdown${dropdownOpen ? ' show' : ''}`}>
+        <button
+          className="form-control dropdown-toggle item"
+          type="button"
+          onClick={toggleDropdown}
+        >
+          Select shifts
+        </button>
+        <div className={`dropdown-menu${dropdownOpen ? ' show' : ''}`}>
+          <div className="dropdown-item">
+            <input
+              type="checkbox"
+              checked={isItemSelected('Day')}
+              onChange={() => handleItemClick('Day')}
+              style={{marginRight: "10px"}}
+            />
+            <label>Day Shift (1st)</label>
+          </div>
+          <div className="dropdown-item">
+            <input
+              type="checkbox"
+              checked={isItemSelected('Afternoon')}
+              onChange={() => handleItemClick('Afternoon')}
+              style={{marginRight: "10px"}}
+            />
+            <label>Afternoon Shift (2nd)</label>
+          </div>
+          <div className="dropdown-item">
+            <input
+              type="checkbox"
+              checked={isItemSelected('Night')}
+              onChange={() => handleItemClick('Night')}
+              style={{marginRight: "10px"}}
+            />
+            <label>Night Shift (3rd)</label>
+          </div>
+        </div>
+      </div>
     </div>
-    <div className="form-group col-md-8 item">
-      <label htmlFor="start">Start Time</label>
-      <input type="text" className="form-control" placeholder="When they'll start a shift" />
-    </div>
-    <div className="form-group col-md-8 item">
+    </Col>
+    {/*<div className="form-group col-md-8 item">
       <label htmlFor="end">End Time</label>
       <input type="text" className="form-control" placeholder="When they'll end a shift" />
-    </div>
-    <div className="form-group col-md-8 item">
-      <label htmlFor="number">Number of Associates</label>
-      <input type="text" className="form-control" placeholder="How many people do you need?" />
-    </div>
-    <div className="form-group col-md-8 item">
+  </div>*/}
+    <Row className="custom-row">
+    <Col md={5} className="item">
+    <div className='form-group item'>
+        <label htmlFor="associate-dropdown">Number of Associates</label>
+        <select
+          id="associate-dropdown"
+          value={selectedItem}
+          onChange={handleDropdownChange}
+          className="form-control"
+          style={{appearance: "auto"}}
+        >
+          <option value="">1-5</option>
+          <option value="6-10">6-10</option>
+          <option value="11-15">11-15</option>
+          <option value="16-20">16-20</option>
+          <option value="20+">20+</option>
+        </select>
+      </div>
+    </Col>
+    <Col md={6} className="row-item">
+    <div className="form-group item row-item">
       <label htmlFor="rate">Hourly Rate</label>
-      <input type="text" className="form-control" placeholder="The hourly rate" />
+      <input type="text" className="form-control" placeholder="$" />
     </div>
+    </Col>
+    </Row>
+    
 
     <div className="form-group col-md-8 item">
       <label htmlFor="manager">Shift Manager</label>
       <input type="text" className="form-control" placeholder="Who is managing the shift?" />
     </div>
-    <div className="form-group col-md-8 item">
+    <Row className="custom-row">
+    <Col md={5} className="item">
+    <div className="form-group item">
       <label htmlFor="manager-phone">Phone</label>
       <input type="text" className="form-control" placeholder="Manager's phone" />
     </div>
-    <div className="form-group col-md-8 item" >
+    </Col>
+    <Col md={6} className="row-item">
+    <div className="form-group item row-item" >
       <label htmlFor="manager-email">Email</label>
       <input type="text" className="form-control" placeholder="Manager's email" />
     </div>
+    </Col>
+    </Row>
+    
+    {/*TODO: Combine phone and email*/}
 
-    <button type="submit" className="btn btn-primary col-md-4 item button">Submit</button>
+    <button type="submit" className="btn btn-primary col-md-4 item button">SUBMIT</button>
+    <div className="form-group" style={{marginBottom: "52px", fontSize: "14px"}}>
+        <label htmlFor="intro">Need to speak to someone? <a href="https://www.partnerspersonnel.com/locations-list/">Find your local branch</a></label>
+    </div>
     </form>
     
     </div>

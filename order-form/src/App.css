@@ -11,7 +11,6 @@
   
   font-size: calc(10px + 1vmin);
   color: black;
-  padding-left: 10vw;
 }
 
 
@@ -22,6 +21,16 @@
   font-weight: 500;
   text-align: left;
   font-size: .8rem;
+  --bs-gutter-x: 0;
+}
+
+.row-item {
+  margin-left: 10px;
+  padding-right: 0;
+}
+
+.custom-row {
+  width: 66.66667%;
 }
 
 .heading {
@@ -41,7 +50,8 @@
 }
 
 .button {
-  margin-bottom: 15px;
+  margin-top: 24px;
+  margin-bottom: 24px;
   background-color: #233759 !important;
 }
 
