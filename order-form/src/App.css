@@ -61,3 +61,7 @@
   margin-top: 0.2rem;
   margin-bottom: 2rem;
 }
+
+.datepicker .react-datepicker-wrapper{
+  display: inherit;
+}

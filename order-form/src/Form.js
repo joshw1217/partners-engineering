@@ -1,12 +1,20 @@
 import React, {useState} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import logo from './partners_logo.png';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 
 
 const Form = () => {
 
+    /* Datepicker variables */
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
 
     const [selectedItem, setSelectedItem] = useState('');
 
@@ -15,13 +23,13 @@ const Form = () => {
     };
 
     const [selectedItems, setSelectedItems] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
+    const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-  };
+    };
 
-  const handleItemClick = (itemValue) => {
+    const handleItemClick = (itemValue) => {
     if (selectedItems.includes(itemValue)) {
       setSelectedItems(selectedItems.filter((item) => item !== itemValue));
     } else {
@@ -94,10 +102,17 @@ const Form = () => {
       <input type="text" className="form-control" placeholder="Position to fill" />
     </div>
     <Row className="custom-row">
+    
     <Col md={5} className="item">
-    <div className="form-group  item">
-      <label htmlFor="date">Start Date</label>
-      <input type="text" className="form-control" placeholder="What date will they start?" />
+    <div className="form-group item datepicker">
+      <label htmlFor="datepicker" className="datepicker">Start Date</label>
+      <DatePicker
+        id="datepicker"
+        selected={selectedDate}
+        onChange={handleDateChange}
+        className="form-control"
+        dateFormat="MM/dd/yyyy"
+      />
     </div>
     </Col>
     <Col md={6} className="row-item">
@@ -111,23 +126,25 @@ const Form = () => {
           className="form-control"
           style={{appearance: "auto"}}
         >
-          <option value="">1 week</option>
+          <option value="">Indefinitely</option>
+          <option value="1 week">1 Week</option>
           <option value="1 month">1 month</option>
           <option value="6 months">6 months</option>
           <option value="1 year">1 year</option>
-          <option value="Indefinitely">Indefinitely</option>
         </select>
       </div>
     </Col>
     </Row>
+    {/*TODO: Shift needs to be a row of checkboxes, and needs 4th option - different time */}
     <Col md={8} className="item">
     <div className="form-group">
-      <label htmlFor="shift-dropdown">Shift</label>
+      <label htmlFor="shift-dropdown">Shifts to Fill</label>
       <div className={`dropdown${dropdownOpen ? ' show' : ''}`}>
         <button
           className="form-control dropdown-toggle item"
           type="button"
           onClick={toggleDropdown}
+          style={{marginTop: "0px"}}
         >
           Select shifts
         </button>
@@ -186,6 +203,7 @@ const Form = () => {
         </select>
       </div>
     </Col>
+    {/*TODO: Modify this to only accept numeric dollar inputs, have divider between $ and numbers */}
     <Col md={6} className="row-item">
     <div className="form-group item row-item">
       <label htmlFor="rate">Hourly Rate</label>
