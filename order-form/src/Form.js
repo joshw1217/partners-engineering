@@ -18,35 +18,31 @@ const Form = () => {
 
     const [selectedItem, setSelectedItem] = useState('');
 
+
+    /* Dropdown variables */
     const handleDropdownChange = (event) => {
       setSelectedItem(event.target.value);
     };
 
-    const [selectedItems, setSelectedItems] = useState([]);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dollarAmount, setDollarAmount] = useState('');
 
-    const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+   /* Dollar limiter variables */
+    const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+    // Remove any non-numeric and non-decimal characters from the input value
+    const numericValue = inputValue.replace(/[^0-9.]/g, '');
+    setDollarAmount(numericValue);
     };
 
-    const handleItemClick = (itemValue) => {
-    if (selectedItems.includes(itemValue)) {
-      setSelectedItems(selectedItems.filter((item) => item !== itemValue));
-    } else {
-      setSelectedItems([...selectedItems, itemValue]);
-    }
-  };
 
-  const isItemSelected = (itemValue) => {
-    return selectedItems.includes(itemValue);
-  };
+
 
   return (
     <div>
       <nav className="navbar custom-nav">
         <div className="custom-nav">
-          <a className="navbar-brand" href="www.parnterspersonnel.com">
-            <img src={logo} alt="Company Logo" height="50" />
+          <a className="navbar-brand" href="https://www.partnerspersonnel.com/">
+            <img src={logo} alt="Company Logo" height="50" href="https://www.partnerspersonnel.com/"/>
           </a>
         </div>
       </nav>
@@ -137,45 +133,52 @@ const Form = () => {
     </Row>
     {/*TODO: Shift needs to be a row of checkboxes, and needs 4th option - different time */}
     <Col md={8} className="item">
-    <div className="form-group">
-      <label htmlFor="shift-dropdown">Shifts to Fill</label>
-      <div className={`dropdown${dropdownOpen ? ' show' : ''}`}>
-        <button
-          className="form-control dropdown-toggle item"
-          type="button"
-          onClick={toggleDropdown}
-          style={{marginTop: "0px"}}
-        >
-          Select shifts
-        </button>
-        <div className={`dropdown-menu${dropdownOpen ? ' show' : ''}`}>
-          <div className="dropdown-item">
-            <input
-              type="checkbox"
-              checked={isItemSelected('Day')}
-              onChange={() => handleItemClick('Day')}
-              style={{marginRight: "10px"}}
-            />
-            <label>Day Shift (1st)</label>
-          </div>
-          <div className="dropdown-item">
-            <input
-              type="checkbox"
-              checked={isItemSelected('Afternoon')}
-              onChange={() => handleItemClick('Afternoon')}
-              style={{marginRight: "10px"}}
-            />
-            <label>Afternoon Shift (2nd)</label>
-          </div>
-          <div className="dropdown-item">
-            <input
-              type="checkbox"
-              checked={isItemSelected('Night')}
-              onChange={() => handleItemClick('Night')}
-              style={{marginRight: "10px"}}
-            />
-            <label>Night Shift (3rd)</label>
-          </div>
+    <div>
+      <label>Shifts to fill</label>
+      <div className="d-flex item">
+        <div className="form-check me-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="checkbox1"
+            value="option1"
+          />
+          <label className="form-check-label" htmlFor="checkbox1">
+            Day Shift (1st)
+          </label>
+        </div>
+        <div className="form-check me-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="checkbox2"
+            value="option2"
+          />
+          <label className="form-check-label" htmlFor="checkbox2">
+            Afternoon Shift (2nd)
+          </label>
+        </div>
+        <div className="form-check me-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="checkbox3"
+            value="option3"
+          />
+          <label className="form-check-label" htmlFor="checkbox3">
+            Night Shift (3rd)
+          </label>
+        </div>
+        <div className="form-check me-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="checkbox4"
+            value="option4"
+          />
+          <label className="form-check-label" htmlFor="checkbox4">
+            Other
+          </label>
         </div>
       </div>
     </div>
@@ -206,8 +209,20 @@ const Form = () => {
     {/*TODO: Modify this to only accept numeric dollar inputs, have divider between $ and numbers */}
     <Col md={6} className="row-item">
     <div className="form-group item row-item">
-      <label htmlFor="rate">Hourly Rate</label>
-      <input type="text" className="form-control" placeholder="$" />
+    <label htmlFor="rate">Hourly Rate</label>
+    <div className="input-group">
+    <span className="input-group-text">$</span>
+        <input
+          type="text"
+          className="form-control"
+          id="dollarAmount"
+          value={dollarAmount}
+          onChange={handleInputChange}
+          inputMode="numeric"
+          pattern="[0-9]*\.?[0-9]*"
+          placeholder="0.00"
+        />
+    </div>
     </div>
     </Col>
     </Row>
@@ -238,6 +253,8 @@ const Form = () => {
     <div className="form-group" style={{marginBottom: "52px", fontSize: "14px"}}>
         <label htmlFor="intro">Need to speak to someone? <a href="https://www.partnerspersonnel.com/locations-list/">Find your local branch</a></label>
     </div>
+    
+    
     </form>
     
     </div>
